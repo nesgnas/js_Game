@@ -33,6 +33,13 @@ class moveObj extends gameObject{
     }
 
     updateSprite(state){
-        this.sprite.setAnimation("idle-"+this.direction);
+        if (this.isCanBeControlled && this.movingProcessRemaining===0 && !state.arrow){
+            this.sprite.setAnimation("idle-"+this.direction);
+            return;
+        }
+
+        if (this.movingProcessRemaining >0){
+            this.sprite.setAnimation("walk-"+this.direction);
+        }
     }
 }
