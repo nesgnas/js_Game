@@ -69,9 +69,9 @@ class Sprite{
             this.curentAnimationFrame =0;
         }
     }
-    draw(ctx){
-        const x = this.gameObject.x -8; // set image at beginning value
-        const y = this.gameObject.y -18;
+    draw(ctx, cameraPerson){
+        const x = this.gameObject.x -8 + untils.withGrid(10.5)- cameraPerson.x; // set image at beginning value
+        const y = this.gameObject.y -18 +untils.withGrid(10.5) -cameraPerson.y  ;
 
         this.isShadowLoaded && ctx.drawImage(this.shadow,x,y)
 

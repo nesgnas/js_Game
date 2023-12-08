@@ -13,20 +13,28 @@ class overWorld{
             // clear frame
             this.ctx.clearRect(0,0, this.canvas.width,this.canvas.height)
 
-            //Draw Lower Layer
-            this.map.drawLowerImage(this.ctx);
+            // establish camera person
+            const cameraPerson = this.map.gameObjects.ship1;
 
-
-
-            //Draw Upper Layer
-            this.map.drawUpperImage(this.ctx)
-
-            //Draw game Object
+            // update all object
             Object.values(this.map.gameObjects).forEach(object => {
                 object.update({
                     arrow: this.directionInput.direction,
                 });
-                object.sprite.draw(this.ctx);
+            })
+
+
+            //Draw Lower Layer
+            //this.map.drawLowerImage(this.ctx,cameraPerson);
+
+
+
+            //Draw Upper Layer
+            this.map.drawUpperImage(this.ctx, cameraPerson)
+
+            //Draw game Object
+            Object.values(this.map.gameObjects).forEach(object => {
+                object.sprite.draw(this.ctx, cameraPerson);
             })
 
             requestAnimationFrame(()=>{

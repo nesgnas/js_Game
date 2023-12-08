@@ -10,34 +10,26 @@ class overWorldMap{
 
     }
 
-    drawLowerImage(ctx){
-        ctx.drawImage(this.lowerImage,0,0)
+    drawLowerImage(ctx, cameraPerson){
+        ctx.drawImage(
+            this.lowerImage,
+            untils.withGrid(10.5) - cameraPerson.x,
+            untils.withGrid(6) - cameraPerson.y,
+        )
     }
 
-    drawUpperImage(ctx){
-        ctx.drawImage(this.upperImage,0,0)
+    drawUpperImage(ctx, cameraPerson){
+        ctx.drawImage(
+            this.upperImage,
+            0,0
+        )
     }
 }
 
 // create set of list product to draw
 window.overWorldMap = {
-    DemoRoom: {
-        upperSrc: "./map/sample/DemoLower.png",
-        lowerSrc: "./map/sample/DemoLower.png",
-        gameObjects: {
-            ship: new moveObj({
-                x: untils.withGrid(5),
-                y: untils.withGrid(6),
-            }),
-            ship2: new moveObj({
-                x: untils.withGrid(10),
-                y: untils.withGrid(6),
-            }),
-
-        }
-    },
     Street: {
-        upperSrc: "./map/sample/StreetNorthLower.png",
+        upperSrc: "./basicmap.png",
         lowerSrc: "./map/sample/StreetNorthUpper.png",
         gameObjects: {
             ship1: new moveObj({
