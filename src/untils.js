@@ -1,5 +1,5 @@
 const untils = {
     withGrid(n) {
-        return n*16;
+        return n*32;
     }
 }

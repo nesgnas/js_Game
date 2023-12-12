@@ -2,23 +2,17 @@ class overWorldMap{
     constructor(config) {
         this.gameObjects = config.gameObjects;
 
-        this.lowerImage = new Image();
-        this.lowerImage.src = config.lowerSrc;
+        // this.lowerImage = new Image();
+        // this.lowerImage.src = config.lowerSrc;
 
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc;
 
     }
 
-    drawLowerImage(ctx, cameraPerson){
-        ctx.drawImage(
-            this.lowerImage,
-            untils.withGrid(10.5) - cameraPerson.x,
-            untils.withGrid(6) - cameraPerson.y,
-        )
-    }
 
-    drawUpperImage(ctx, cameraPerson){
+
+    drawUpperImage(ctx){
         ctx.drawImage(
             this.upperImage,
             0,0
@@ -30,23 +24,46 @@ class overWorldMap{
 window.overWorldMap = {
     Street: {
         upperSrc: "./basicmap.png",
-        lowerSrc: "./map/sample/StreetNorthUpper.png",
         gameObjects: {
-            ship1: new moveObj({
-                isCanBeControlled: true,
-                x: untils.withGrid(5),
-                y: untils.withGrid(6),
-            }),
-            ship21: new moveObj({
-                x: untils.withGrid(10),
-                y: untils.withGrid(6),
-            }),
-            npc: new moveObj({
+            selector: new moveObj({
+                isCanBeControlled: false,
+                map: "two",
                 x: untils.withGrid(1),
-                y: untils.withGrid(6),
-                src: "./map/characters/people/npc4.png"
+                y: untils.withGrid(1),
+                src: "./map/use-Tile/selector/shock-mine.png"
             }),
+            ship1x1_prev: new moveObj({
+                isCanBeControlled: false,
+                map: "two",
+                x: untils.withGrid(3),
+                y: untils.withGrid(3),
 
+                src: "./map/use-Tile/ship1x1/scorch.png"
+            }),
+            ship2x2_prev: new moveObj({
+                isCanBeControlled: false,
+                map: "two",
+                x: untils.withGrid(5),
+                y: untils.withGrid(5),
+                scale: 64,
+                src: "./map/use-Tile/ship2x2/swarmer.png"
+            }),
+            ship3x3_prev: new moveObj({
+                isCanBeControlled: false,
+                map: "two",
+                x: untils.withGrid(7),
+                y: untils.withGrid(7),
+                scale: 96,
+                src: "./map/use-Tile/ship_3x3/fuse.png"
+            }),
+            ship4x4_prev: new moveObj({
+                isCanBeControlled: true,
+                map: "two",
+                x: untils.withGrid(11),
+                y: untils.withGrid(11),
+                scale: 128,
+                src: "./map/use-Tile/ship_4x4/foreshadow.png"
+            }),
         }
     },
 }

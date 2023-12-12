@@ -19,7 +19,7 @@ class moveObj extends gameObject{
         this.updateSprite(state);
         if (this.isCanBeControlled && this.movingProcessRemaining===0 && state.arrow) { // move only after finish moving
             this.direction = state.arrow;
-            this.movingProcessRemaining =16;
+            this.movingProcessRemaining =32;
         }
     }
 
