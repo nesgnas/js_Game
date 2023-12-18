@@ -11,7 +11,8 @@ class directionInput{
             "KeyS": "Down",
             "KeyA": "Left",
             "KeyD": "Right",
-
+            "KeyQ": "Select",
+            "KeyE": "Delete",
 
         }
 

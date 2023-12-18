@@ -2,7 +2,8 @@ class Sprite{
     constructor(config) {
         //set up the image
         this.image = new Image();
-        this.image.src = config.src;
+        console.log(config.src);
+        this.image.src = config.src || "./map/use-Tile/selector/shock-mine.png";
         this.image.onload = ()=> {
             this.isLoaded = true;
         }
@@ -28,7 +29,7 @@ class Sprite{
         this.curentAnimation = "walk-Up"; //config.animations || "idle-Down";
         this.curentAnimationFrame = 0;
 
-        this.animationFrameLimit = config.animationFrameLimit || 48;
+        this.animationFrameLimit = config.animationFrameLimit || 16;
         this.animationFrameProgress = this.animationFrameLimit;
 
         //Ref the game object

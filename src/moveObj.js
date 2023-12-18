@@ -4,14 +4,18 @@ class moveObj extends gameObject{
         this.movingProcessRemaining = 0;
 
         this.direction = "Right";
+        this.lenMove = config.lenMove;
 
         this.isCanBeControlled = config.isCanBeControlled || false;
+        this.isVisible  = config.isVisible || false;
         this.directionUpdate = {
-            "Up": ["y", -1],
-            "Down": ["y", 1],
-            "Left": ["x",-1],
-            "Right": ["x", 1],
+            "Up": ["y", -config.lenMove] ,
+            "Down": ["y", config.lenMove],
+            "Left": ["x",-config.lenMove],
+            "Right": ["x", config.lenMove],
         }
+        this.type = config.type;
+
     }
 
     update(state) {
@@ -41,5 +45,10 @@ class moveObj extends gameObject{
         if (this.movingProcessRemaining >0){
             this.sprite.setAnimation("walk-"+this.direction);
         }
+    }
+
+    fillArray(array, sizeOfShip){
+
+        return null;
     }
 }
