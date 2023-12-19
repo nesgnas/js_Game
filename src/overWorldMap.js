@@ -47,6 +47,7 @@ window.overWorldMap = {
                 lenMove: 1,
                 isVisible: false,
                 type: "ship",
+                scale: 32,
 
                 flagSrc: "A",
                 src: "./map/use-Tile/ship1x1/scorch.png",
@@ -58,13 +59,14 @@ window.overWorldMap = {
                 map: "two",
                 x: untils.withGrid(5),
                 y: untils.withGrid(5),
-                lenMove: 1,
+                lenMove: 2,
                 num:1,
                 sizeOfShip: 2,
                 isVisible: false,
                 scale: 64,
                 type: "ship",
                 flagSrc: "A",
+
                 src: "./map/use-Tile/ship2x2/swarmer.png",
                 sSrc: "./map/use-Tile/ship2x2/swarmer-dfbd5a.png",
                 dSrc: "./map/use-Tile/ship2x2/swarmer-ee5d33.png"
@@ -81,6 +83,7 @@ window.overWorldMap = {
                 scale: 96,
                 type: "ship",
                 flagSrc: "A",
+
                 src: "./map/use-Tile/ship_3x3/fuse.png",
                 sSrc: "./map/use-Tile/ship_3x3/fuse-dfbd5a.png",
                 dSrc: "./map/use-Tile/ship_3x3/fuse-ee5d33.png"
@@ -90,7 +93,7 @@ window.overWorldMap = {
                 map: "two",
                 x: untils.withGrid(1),
                 y: untils.withGrid(1),
-                lenMove: 1,
+                lenMove: 4,
                 num:1,
                 type: "ship",
                 sizeOfShip: 4,

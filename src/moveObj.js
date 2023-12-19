@@ -5,25 +5,33 @@ class moveObj extends gameObject{
 
         this.direction = "Right";
         this.lenMove = config.lenMove;
+        this.scale = config.scale;
+        this.flgSrc = config.flagSrc;
 
         this.isCanBeControlled = config.isCanBeControlled || false;
         this.isVisible  = config.isVisible || false;
         this.directionUpdate = {
-            "Up": ["y", -config.lenMove] ,
-            "Down": ["y", config.lenMove],
-            "Left": ["x",-config.lenMove],
-            "Right": ["x", config.lenMove],
+            "Up": ["y", -this.lenMove] ,
+            "Down": ["y", this.lenMove],
+            "Left": ["x",-this.lenMove],
+            "Right": ["x", this.lenMove],
         }
         this.type = config.type;
 
     }
 
     update(state) {
+        this.directionUpdate = {
+            "Up": ["y", -this.lenMove] ,
+            "Down": ["y", this.lenMove],
+            "Left": ["x",-this.lenMove],
+            "Right": ["x", this.lenMove],
+        }
         this.updatePosition();
         this.updateSprite(state);
         if (this.isCanBeControlled && this.movingProcessRemaining===0 && state.arrow) { // move only after finish moving
             this.direction = state.arrow;
-            this.movingProcessRemaining =32;
+            this.movingProcessRemaining =  32;
         }
     }
 

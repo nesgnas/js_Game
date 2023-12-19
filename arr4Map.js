@@ -1,10 +1,22 @@
-class Arr4Map{
+class Arr4Map {
     constructor() {
 
     }
 
-    Empty2DArray(rows, cols) {
-        return Array.from({ length: rows },
-            () => Array(cols).fill(0));
-    }
+
+    const
+    Empty2DArray = (rows, columns) => {
+        let arr = [];
+        let value = 0;
+
+        // creating two-dimensional array
+        for (let i = 0; i < rows; i++) {
+            arr[i] = [];
+            for (let j = 0; j < columns; j++) {
+                arr[i][j] = 0;
+            }
+        }
+        return arr;
+    };
+
 }

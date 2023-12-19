@@ -70,7 +70,7 @@ class Sprite{
         const x = this.gameObject.x;
         const y = this.gameObject.y;
 
-        this.isShadowLoaded && ctx.drawImage(this.shadow,x,y)
+
 
         const [frameX,frameY] = this.frame;
 
