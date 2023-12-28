@@ -1,9 +1,12 @@
 class overWorld{
+
+
     constructor(config) {
         this.element = config.element;
         this.canvas = this.element.querySelector(".game-canvas");
         this.ctx = this.canvas.getContext("2d")
         this.map = null;
+        this.inMap = null;
         this.enemy = config.enemy;
         this.player =  config.player;
 
@@ -21,7 +24,7 @@ class overWorld{
 
 
             // clear frame
-            this.ctx.clearRect(0,0, this.canvas.width,this.canvas.height)
+            this.ctx.clearRect(0,0, this.canvas.width,this.canvas.height);
 
             // console.log("diff clone and Obj")
             // console.log("clone")
@@ -80,12 +83,61 @@ class overWorld{
 
 
             //Draw Upper Layer
-            this.map.drawUpperImage(this.ctx)
+            this.map.drawUpperImage(this.ctx);
+
+
+            let a = new Object();
+
+            // Object.values(this.inMap.gameObjects).forEach(objectIN =>{
+            //     if (objectIN.flagInMap ===2){
+            //         a = objectIN;
+            //     }
+            //     a.x = untils.withGrid(10);
+            //     a.y = untils.withGrid(10);
+            // })
+            //
+            // a.isVisible && a.sprite.draw(this.ctx);
+            // a.updateInMap({
+            //     arrow: this.directionInput.direction,
+            // });
+
+
+
+            let temp = 0;
             for (var i = 0; i<14; i++){
                 for (var j = 0; j<14;j++){
                     if (this.player[i][j] > 0){
-                        this.player[i][j] = -1;
-                        console.log("FOUND at i= "+i+" j= "+j);
+                        temp = this.player[i][j];
+                        for (var iT = i;iT<=i+temp;iT++){
+                            for (var jT = j;jT<=j+temp;jT++){
+                                this.player[iT][jT] = -temp;
+                                console.log(this.player);
+                            }
+                        }
+
+                        Object.values(this.inMap.gameObjects).forEach(objectIN =>{
+                            if (objectIN.flagInMap ===2){
+                                a = objectIN;
+                            }
+                            a.x = untils.withGrid(i);
+                            a.y = untils.withGrid(j);
+                        })
+
+                        a.isVisible && a.sprite.draw(this.ctx);
+                        a.updateInMap({
+                            arrow: this.directionInput.direction,
+                        });
+                        temp = 0;
+
+
+
+                    }
+                }
+            }
+            for (var i = 0; i<14; i++) {
+                for (var j = 0; j < 14; j++) {
+                    if (this.player[i][j] < 0){
+                        this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
                     }
                 }
             }
@@ -122,6 +174,8 @@ class overWorld{
 
         const logicPlayer = new logicForMap(this.player);
         logicPlayer.fill(9,9,3);
+
+        logicPlayer.fill(5,5,3);
         // logicPlayer.fill(1,1,4)
         // console.log(this.player);
         // logicPlayer.delete (1,1,4);
@@ -133,6 +187,7 @@ class overWorld{
 
 
         this.map = new overWorldMap(window.overWorldMap.Street);
+        this.inMap = new overWorldMap(window.overWorldMap.checkPoint);
         Object.values(this.map.gameObjects)
             .sort(object =>{object.scale})
             .forEach(object => {

@@ -7,6 +7,7 @@ class moveObj extends gameObject{
         this.lenMove = config.lenMove;
         this.scale = config.scale;
         this.flgSrc = config.flagSrc;
+        this.flagInMap = config.flagInMap;
 
         this.isCanBeControlled = config.isCanBeControlled || false;
         this.isVisible  = config.isVisible || false;
@@ -34,6 +35,20 @@ class moveObj extends gameObject{
             this.movingProcessRemaining =  32;
         }
     }
+    updateInMap(state) {
+        this.directionUpdate = {
+            "Up": ["y", this.lenMove] ,
+            "Down": ["y", this.lenMove],
+            "Left": ["x",-this.lenMove],
+            "Right": ["x", this.lenMove],
+        }
+        //this.updatePosition();
+        this.updateSpriteInMap(state);
+        if (this.isCanBeControlled && this.movingProcessRemaining===0 && state.arrow) { // move only after finish moving
+            this.direction = "Up";
+            this.movingProcessRemaining =  0;
+        }
+    }
 
     updatePosition(){
         if (this.movingProcessRemaining>0){
@@ -53,6 +68,14 @@ class moveObj extends gameObject{
         if (this.movingProcessRemaining >0){
             this.sprite.setAnimation("walk-"+this.direction);
         }
+    }
+    updateSpriteInMap(state){
+
+            this.sprite.setAnimation("idle-"+this.direction);
+            return;
+
+
+
     }
 
     fillArray(array, sizeOfShip){

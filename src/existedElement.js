@@ -1,3 +1,8 @@
 class existedElement extends gameObject{
-    this
+
+
+    constructor(config) {
+        super(config);
+        this.flag = config.flagInMap;
+    }
 }
