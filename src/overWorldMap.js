@@ -72,14 +72,14 @@ window.overWorldMap = {
                 dSrc: "./map/use-Tile/ship2x2/swarmer-ee5d33.png"
             }),
             ship3x3_prev: new moveObj({
-                isCanBeControlled: false,
+                isCanBeControlled: true,
                 map: "two",
                 x: untils.withGrid(7),
                 y: untils.withGrid(7),
                 lenMove: 1,
                 num:1,
                 sizeOfShip: 3,
-                isVisible: false,
+                isVisible: true,
                 scale: 96,
                 type: "ship",
                 flagSrc: "A",
@@ -97,7 +97,7 @@ window.overWorldMap = {
                 num:1,
                 type: "ship",
                 sizeOfShip: 4,
-                isVisible: true,
+                isVisible: false,
                 scale: 128,
 
                 flagSrc: "A",
@@ -106,8 +106,7 @@ window.overWorldMap = {
                 dSrc: "./map/use-Tile/ship_4x4/foreshadow-ee5d33.png"
             }),
         }
-    },
-    checkPoint: {
+    }, checkPoint: {
         upperSrc: "./basicmap.png",
         gameObjects: {
             selector: new moveObj({
@@ -131,7 +130,7 @@ window.overWorldMap = {
                 num:1,
                 sizeOfShip: 1,
                 lenMove: 1,
-                isVisible: false,
+                isVisible: true,
                 type: "ship",
                 scale: 32,
                 flagInMap: 1,
@@ -167,8 +166,9 @@ window.overWorldMap = {
                 lenMove: 1,
                 num:1,
                 sizeOfShip: 3,
-                isVisible: false,
+                isVisible: true,
                 scale: 96,
+
                 type: "ship",
                 flagSrc: "A",
                 flagInMap: 3,

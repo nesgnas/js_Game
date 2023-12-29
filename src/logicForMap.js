@@ -12,8 +12,8 @@ class logicForMap{
                 this.arr[j][i] = scale||0;
             }
         }
-        console.log("display arr");
-        console.log(this.arr);
+        //console.log("display arr");
+        //console.log(this.arr);
 
     }
 

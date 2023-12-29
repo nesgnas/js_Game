@@ -80,6 +80,7 @@ class overWorld{
 
 
             })
+            console.log(this.player);
 
 
             //Draw Upper Layer
@@ -104,23 +105,23 @@ class overWorld{
 
 
             let temp = 0;
-            for (var i = 0; i<14; i++){
-                for (var j = 0; j<14;j++){
+            for (var i = 0; i<13; i++){
+                for (var j = 0; j<13;j++){
                     if (this.player[i][j] > 0){
                         temp = this.player[i][j];
-                        for (var iT = i;iT<=i+temp;iT++){
-                            for (var jT = j;jT<=j+temp;jT++){
+                        for (var iT = i;iT<i+temp;iT++){
+                            for (var jT = j;jT<j+temp;jT++){
                                 this.player[iT][jT] = -temp;
-                                console.log(this.player);
+
                             }
                         }
 
                         Object.values(this.inMap.gameObjects).forEach(objectIN =>{
-                            if (objectIN.flagInMap ===2){
+                            if (objectIN.flagInMap ===temp){
                                 a = objectIN;
                             }
-                            a.x = untils.withGrid(i);
-                            a.y = untils.withGrid(j);
+                            a.x = untils.withGrid(j+1);
+                            a.y = untils.withGrid(i+1);
                         })
 
                         a.isVisible && a.sprite.draw(this.ctx);
@@ -173,9 +174,10 @@ class overWorld{
         // console.log(this.player);
 
         const logicPlayer = new logicForMap(this.player);
-        logicPlayer.fill(9,9,3);
+        //logicPlayer.fill(9,9,3);
 
-        logicPlayer.fill(5,5,3);
+        //logicPlayer.fill(6,6,3);
+        logicPlayer.fill(1,8,4);
         // logicPlayer.fill(1,1,4)
         // console.log(this.player);
         // logicPlayer.delete (1,1,4);
