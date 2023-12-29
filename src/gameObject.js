@@ -31,6 +31,9 @@ class gameObject{
     changeState(changeState,logicPlayer){
         console.log("in change State, try take object flagSrc value "+this.flgSrc);
         const player = logicPlayer;
+        let xT= this.x/untils.withGrid(1);
+        let yT = this.y/untils.withGrid(1);
+        let scaleT = this.scale/untils.withGrid(1);
 
         if (changeState === "B" ){
             if (this.flgSrc ==="A" || this.flgSrc ==="B"){
@@ -41,7 +44,12 @@ class gameObject{
                 console.log("changState is "+changeState+", flgSrc is "+this.flgSrc);
 
                 this.flgSrc = "B";
-                player.fill(this.x/untils.withGrid(1),this.y/untils.withGrid(1),this.scale/untils.withGrid(1));
+
+
+                if(logicPlayer.isFullScale(xT,yT,scaleT)){
+                    player.fill(this.x/untils.withGrid(1),this.y/untils.withGrid(1),this.scale/untils.withGrid(1));
+                }
+
             }
             if (this.flgSrc ==="C"){
                 this.sprite = new Sprite({
@@ -51,8 +59,9 @@ class gameObject{
                 console.log("changState is "+changeState+", flgSrc is "+this.flgSrc);
 
                 this.flgSrc = "A";
-                player.delete(this.x/untils.withGrid(1),this.y/untils.withGrid(1),this.scale/untils.withGrid(1));
-
+                if(logicPlayer.isPoint(xT,yT,scaleT)) {
+                    player.delete(this.x / untils.withGrid(1), this.y / untils.withGrid(1), this.scale / untils.withGrid(1));
+                }
             }
         }
         if (changeState === "C" ){

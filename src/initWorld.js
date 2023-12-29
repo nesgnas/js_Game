@@ -1,13 +1,18 @@
 (function () {
 
 
-    const enemy = new Arr4Map().Empty2DArray(14,14);
+    const enemy = new Arr4Map().Empty2DArray(16,16);
 
-    const player = new Arr4Map().Empty2DArray(14,14);
+
+    const dataEnemy = new dataForEnemy(enemy);
+    dataEnemy.fill();
+    console.log("enemy  AFTER FILL in Init")
+    console.log(enemy)
+
+    const player = new Arr4Map().Empty2DArray(16,16);
     console.log("player in INit")
     console.log(player)
-    console.log("enemy in Init")
-    console.log(enemy)
+
 
 
 

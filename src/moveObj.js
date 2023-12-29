@@ -8,6 +8,7 @@ class moveObj extends gameObject{
         this.scale = config.scale;
         this.flgSrc = config.flagSrc;
         this.flagInMap = config.flagInMap;
+        this.numOfShip = config.totalShip;
 
         this.isCanBeControlled = config.isCanBeControlled || false;
         this.isVisible  = config.isVisible || false;

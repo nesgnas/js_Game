@@ -1,0 +1,6 @@
+class forPlayer{
+
+    constructor(config) {
+
+    }
+}
