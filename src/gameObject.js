@@ -3,6 +3,7 @@ class gameObject{
         this.x = config.x || 0;
         this.y = config.y || 0;
         this.scale = config.scale || 32;
+        this.type = config.type;
 
 
         // change selector

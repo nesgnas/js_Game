@@ -7,12 +7,25 @@ class overWorld{
         this.element = config.element;
         this.canvas = this.element.querySelector(".game-canvas");
         this.ctx = this.canvas.getContext("2d");
+
+        //initial dataset of map
         this.map = null;
         this.inMap = null;
+
+        // arr for map
         this.enemy = config.enemy;
         this.player =  config.player;
+        this.checkerE = config.checkerE;
+        this.checkerP = config.checkerP;
+
+        // pos for control moving left side
         this.initialPositionX = untils.withGrid(1);
         this.initialPositionY = untils.withGrid(1);
+
+        // pos for control moving right side
+        this.gamePlayPosX = untils.withGrid(25);
+        this.gamePlayPosY = untils.withGrid(1);
+
 
     }
 
@@ -28,14 +41,109 @@ class overWorld{
 
 
             const fPlay = new forPlayer(this.queue,this.enemy);
-            if (fPlay.isAlready()){
-                console.log("wrong")
+            if (true){
+            //if (fPlay.isAlready()){
+                //console.log("wrong");
+                //console.log(this.directionInput.direction);
+
+
                 // clear frame
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-            }else {
-                console.log("IN")
+                //Draw  Layer
+                this.map.drawUpperImage(this.ctx);
 
+
+                let a = new Object();
+                let temp = 0;
+                for (var i = 1; i < 15; i++) {
+                    for (var j = 1; j < 15; j++) {
+
+                        if (this.player[i][j] > 0) {
+                            temp = this.player[i][j];
+                            for (var iT = i; iT < i + temp; iT++) {
+                                for (var jT = j; jT < j + temp; jT++) {
+                                    this.player[iT][jT] = -temp;
+                                }
+                            }
+
+                            Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                if (objectIN.flagInMap === temp) {
+                                    a = objectIN;
+                                }
+                                a.x = untils.withGrid(j);
+                                a.y = untils.withGrid(i);
+                            })
+
+                            //draw map
+                            a.isVisible && a.sprite.draw(this.ctx);
+                            a.updateInMap({
+                                arrow: this.directionInput.direction,
+                            });
+                            temp = 0;
+                        }
+                    }
+                }
+                for (var i = 1; i < 15; i++) {
+                    for (var j = 1; j < 15; j++) {
+                        if (this.player[i][j] < 0) {
+                            this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                        }
+                    }
+                }
+
+
+                // take ship
+                let aPlay;
+                Object.values(this.map.gameObjects).forEach(object => {
+                    if (object.type === "selector") {
+                        aPlay = object;
+                    }
+                })
+
+                // on Selector
+                Object.values(this.map.gameObjects).forEach(object => {
+                    if (object.type !=="ship") {
+                        object.isCanBeControlled = true;
+                        object.x = this.gamePlayPosX;
+                        object.y = this.gamePlayPosY;
+                        object.isVisible = true;
+                    } else {
+                        object.isCanBeControlled = false;
+                        object.isVisible = false;
+                    }
+
+                });
+
+                // update direction for Selector
+                Object.values(this.map.gameObjects).forEach(object => {
+                    if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
+
+                    } else
+                    if (object.isVisible){
+                        object.update({
+                            arrow: this.directionInput.direction,
+                        });
+                    }
+                })
+
+                // draw selector
+                Object.values(this.map.gameObjects).forEach(object => {
+                    if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
+
+                    } else
+                    if (object.isVisible) {
+                        object.sprite.draw(this.ctx);
+                        this.gamePlayPosY = object.y;
+                        this.gamePlayPosX = object.x;
+                    }
+                })
+
+
+
+            }else {
+
+                //DON'T CARE
                 const logicPlayer = new logicForMap(this.player);
                 logicPlayer.boderMap();
 
@@ -43,6 +151,7 @@ class overWorld{
                 let curShip = this.queue.peek();
                 let a1;
 
+                // TAKE OUT SHIP
                 Object.values(this.map.gameObjects).forEach(object => {
                     if (object.scale === curShip) {
                         a1 = object;
@@ -55,9 +164,10 @@ class overWorld{
                     this.queue.dequeue();
                     curShip = this.queue.peek();
                 }
+
                 //console.log("state "+this.initialPositionX+" "+this.initialPositionY);
                 Object.values(this.map.gameObjects).forEach(object => {
-                    if (object.scale === curShip) {
+                    if (object.scale === curShip && object.type ==="ship") {
                         object.isCanBeControlled = true;
                         object.x = this.initialPositionX;
                         object.y = this.initialPositionY;
@@ -187,6 +297,7 @@ class overWorld{
 
         //logicPlayer.fill(6,6,3);
         logicPlayer.fill(1,8,1);
+        logicPlayer.fill(2,2,1)
         // logicPlayer.fill(1,1,4)
         // console.log(this.player);
         // logicPlayer.delete (1,1,4);
@@ -194,7 +305,7 @@ class overWorld{
 
 
         const queue = new Queue();
-        console.log("queueeee = "+queue.isEmpty());
+        //console.log("queueeee = "+queue.isEmpty());
         const stack = new Stack();
 
 
@@ -224,7 +335,7 @@ class overWorld{
 
         this.directionInput = new directionInput();
         this.directionInput.init();
-        this.directionInput.direction;
+        this.directionInput.direction || "right";
 
 
         this.startGameLoop();

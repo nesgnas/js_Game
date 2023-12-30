@@ -5,7 +5,7 @@ class dataForEnemy{
         this.logic.boderMap();
     }
 
-    fill(){
+    renderMap(){
         // 2 area for 4x4
         for (var i =0;i<2;i++){
             this.add(4);

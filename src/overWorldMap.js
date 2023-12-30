@@ -28,9 +28,10 @@ window.overWorldMap = {
             selector: new moveObj({
                 isCanBeControlled: false,
                 map: "two",
-                x: untils.withGrid(1),
-                y: untils.withGrid(1),
+                x: untils.withGrid(15),
+                y: untils.withGrid(15),
                 type: "selector",
+                scale: 32,
 
                 lenMove: 1,
                 isVisible: false,
@@ -119,10 +120,14 @@ window.overWorldMap = {
                 y: untils.withGrid(1),
                 type: "selector",
                 flagInMap: 0,
+                scale: 32,
 
                 lenMove: 1,
                 isVisible: false,
-                src: "./map/use-Tile/selector/shock-mine.png"
+                src: "./map/use-Tile/selector/shock-mine.png",
+                sSrc: "./map/use-Tile/ship1x1/shock-mine-118d25.png",
+                dSrc: "./map/use-Tile/ship1x1/shock-mine-c02c17.png"
+
             }),
             ship1x1_prev: new moveObj({
                 isCanBeControlled: false,
