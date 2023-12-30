@@ -18,6 +18,17 @@ class logicForMap{
 
     }
 
+    isEmpty(){
+        for (var i = 1; i<15; i++){
+            for (var j = 1; j<15;j++){
+               if (this.arr[i][j] !== 0){
+                   return false;
+               }
+            }
+        }
+        return  true;
+    }
+
     delete (posX,posY,scale){
         for (let j =posY;j<=posY+scale-1;j++) {
             for (let i = posX; i <= posX+scale-1; i++) {
@@ -34,7 +45,7 @@ class logicForMap{
 
         for (var i = posX;i<posX+scaleVal;i++){
             for (var j= posY; j< scaleVal + posY; j++){
-                if (this.arr[j][i] !=0){
+                if (this.arr[j][i] !==0){
                     return false;
                 }
             }
