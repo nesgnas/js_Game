@@ -11,8 +11,10 @@ class checkWinner{
     checkToFlagPlayer(posX, posY){
         if (this.player2[posY][posX]>0 ){
             this.checkPlayer2[posY][posX] = 10;
+            return true;
         }else {
             this.checkPlayer2[posY][posX] = -10;
+            return false;
         }
         console.log(this.checkPlayer2);
 
@@ -36,8 +38,10 @@ class checkWinner{
 
         if (this.player1[posY][posX]>0 ){
             this.checkPlayer1[posY][posX] = 10;
+            return false;
         }else {
             this.checkPlayer1[posY][posX] = -10;
+            return true;
         }
         console.log(this.checkPlayer2);
 

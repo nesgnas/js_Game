@@ -17,6 +17,8 @@ class overWorld{
         this.player =  config.player;
         this.checkerE = config.checkerE;
         this.checkerP = config.checkerP;
+        this.shipOfPlayer = null;
+        this.shipOfEnemy = null;
 
         // pos for control moving left side
         this.initialPositionX = untils.withGrid(1);
@@ -45,10 +47,11 @@ class overWorld{
 
             const fPlay = new forPlayer(this.queue,this.enemy);
             const winner = new checkWinner(this.player,this.checkerP,this.enemy,this.checkerE);
-            if (true){
+
+            //if (true){
 
 
-                    //if (fPlay.isAlready()){
+                    if (fPlay.isAlready()){
                     //console.log("wrong");
                     //console.log(this.directionInput.direction);
 
@@ -56,8 +59,12 @@ class overWorld{
                     // clear frame
                     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+                    this.shipOfPlayer = [4,3,2,2];
+                    this.shipOfEnemy = [4,3,2,2];
+
                     //Draw  Layer
                     this.map.drawUpperImage(this.ctx);
+
 
 
                     let a = new Object();
@@ -86,6 +93,16 @@ class overWorld{
                                 a.updateInMap({
                                     arrow: this.directionInput.direction,
                                 });
+                                temp = 0;
+                            }
+                            if (this.enemy[i][j] > 0) {
+                                temp = this.enemy[i][j];
+                                for (var iT = i; iT < i + temp; iT++) {
+                                    for (var jT = j; jT < j + temp; jT++) {
+                                        this.enemy[iT][jT] = -temp;
+                                    }
+                                }
+
                                 temp = 0;
                             }
                             if (this.checkerE[i][j]!==0){
@@ -128,9 +145,64 @@ class overWorld{
                     for (var i = 1; i < 15; i++) {
                         for (var j = 1; j < 15; j++) {
                             if (this.player[i][j] < 0) {
-                                this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
+
+                                temp = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                                let boolean = true;
+                                for (var iT = i; iT < i + temp; iT++) {
+                                    for (var jT = j; jT < j + temp; jT++) {
+                                        this.player[iT][jT] = temp;
+                                        if (this.checkerP[iT][jT]<=0){
+                                            boolean = false;
+
+                                        }
+                                    }
+                                }
+                                if (boolean){
+                                    this.shipOfPlayer[temp-1] --;
+                                    //console.log("do here P");
+                                }
+                                //this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                            }
+                            if(this.enemy[i][j]<0){
+                                temp = Math.sqrt(this.enemy[i][j] * this.enemy[i][j]);
+                                let boolean = true;
+                                for (var iT = i; iT < i + temp; iT++) {
+                                    for (var jT = j; jT < j + temp; jT++) {
+                                        this.enemy[iT][jT] = temp;
+                                        if (this.checkerE[iT][jT]<=0){
+                                            boolean = false;
+
+                                        }
+                                    }
+                                }
+                                if (boolean){
+                                    this.shipOfEnemy[temp-1] --;
+                                    //console.log("do here E");
+                                }
                             }
                         }
+                    }
+
+                    console.log("PLAYER: "+this.shipOfPlayer);
+                    console.log("ENEMY: "+this.shipOfEnemy);
+
+                    let sumP=0;
+                    let sumE = 0;
+                    this.shipOfPlayer.forEach(i =>{
+                        sumP+=i;
+                    });
+                    this.shipOfEnemy.forEach(i=>{
+                        sumE +=i;
+                    });
+                    if (sumE ===0 ){
+                        console.log("Enemy Win")
+                    }else {
+                        console.log("SumE is "+sumE);
+                    }
+                    if (sumP === 0){
+                        console.log("Player Win");
+                    }else {
+                        console.log("SumP is "+sumP);
                     }
 
 
@@ -164,8 +236,8 @@ class overWorld{
                     Object.values(this.map.gameObjects).forEach(object => {
                         if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
                             if (object.preDirect !=="Select") {
-                                winner.checkToFlagPlayer(this.gamePlayPosX / untils.withGrid(1) - 24, this.gamePlayPosY / untils.withGrid(1));
-                                this.turn = false;
+                                this.turn = winner.checkToFlagPlayer(this.gamePlayPosX / untils.withGrid(1) - 24, this.gamePlayPosY / untils.withGrid(1));
+
 
                                 console.log("done in player");
                             }
@@ -180,7 +252,7 @@ class overWorld{
 
                     // draw selector
                     Object.values(this.map.gameObjects).forEach(object => {
-                        console.log(object.preDirect);
+                        //console.log(object.preDirect);
                         if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
 
                         } else if (object.isVisible) {
@@ -196,8 +268,8 @@ class overWorld{
                     console.log("In Enemy area");
                     // INPUT for selection of enemy
 
-                    winner.checkToFlagEnemy(2,2)
-                    this.turn = true;
+                    this.turn = winner.checkToFlagEnemy(2,2);
+
                 }
 
             }else {
@@ -352,11 +424,22 @@ class overWorld{
 
 
 
+
         //logicPlayer.fill(9,9,3);
 
         //logicPlayer.fill(6,6,3);
-        logicPlayer.fill(1,8,1);
-        logicPlayer.fill(2,2,1)
+        logicPlayer.fill(1,1,1);
+        logicPlayer.fill(1,2,1);
+        logicPlayer.fill(2,2,1);
+        logicPlayer.fill(2,1,1);
+        logicPlayer.fill(3,1,2);
+        logicPlayer.fill(3,3,2);
+        logicPlayer.fill(3,5,2);
+        logicPlayer.fill(5,1,3);
+        logicPlayer.fill(5,4,3);
+        logicPlayer.fill(8,1,4);
+
+
         // logicPlayer.fill(1,1,4)
         // console.log(this.player);
         // logicPlayer.delete (1,1,4);
@@ -366,6 +449,14 @@ class overWorld{
         const queue = new Queue();
         //console.log("queueeee = "+queue.isEmpty());
         const stack = new Stack();
+
+
+        let shipOfPlayer = [4,3,2,2];
+        let shipOfEnemy = [4,3,2,2];
+        this.shipOfPlayer = shipOfPlayer;
+        this.shipOfEnemy = shipOfEnemy;
+        console.log("PLAYER: "+this.shipOfPlayer);
+        console.log("ENEMY: "+this.shipOfEnemy);
 
 
         this.map = new overWorldMap(window.overWorldMap.Street);
