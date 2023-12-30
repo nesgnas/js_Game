@@ -26,6 +26,9 @@ class overWorld{
         this.gamePlayPosX = untils.withGrid(25);
         this.gamePlayPosY = untils.withGrid(1);
 
+        //turn
+        this.turn = true;
+
 
     }
 
@@ -41,105 +44,161 @@ class overWorld{
 
 
             const fPlay = new forPlayer(this.queue,this.enemy);
+            const winner = new checkWinner(this.player,this.checkerP,this.enemy,this.checkerE);
             if (true){
-            //if (fPlay.isAlready()){
-                //console.log("wrong");
-                //console.log(this.directionInput.direction);
 
 
-                // clear frame
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-                //Draw  Layer
-                this.map.drawUpperImage(this.ctx);
+                    //if (fPlay.isAlready()){
+                    //console.log("wrong");
+                    //console.log(this.directionInput.direction);
 
 
-                let a = new Object();
-                let temp = 0;
-                for (var i = 1; i < 15; i++) {
-                    for (var j = 1; j < 15; j++) {
+                    // clear frame
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-                        if (this.player[i][j] > 0) {
-                            temp = this.player[i][j];
-                            for (var iT = i; iT < i + temp; iT++) {
-                                for (var jT = j; jT < j + temp; jT++) {
-                                    this.player[iT][jT] = -temp;
+                    //Draw  Layer
+                    this.map.drawUpperImage(this.ctx);
+
+
+                    let a = new Object();
+                    let temp = 0;
+                    for (var i = 1; i < 15; i++) {
+                        for (var j = 1; j < 15; j++) {
+
+                            if (this.player[i][j] > 0) {
+                                temp = this.player[i][j];
+                                for (var iT = i; iT < i + temp; iT++) {
+                                    for (var jT = j; jT < j + temp; jT++) {
+                                        this.player[iT][jT] = -temp;
+                                    }
                                 }
+
+                                Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                    if (objectIN.flagInMap === temp) {
+                                        a = objectIN;
+                                    }
+                                    a.x = untils.withGrid(j);
+                                    a.y = untils.withGrid(i);
+                                })
+
+                                //draw map
+                                a.isVisible && a.sprite.draw(this.ctx);
+                                a.updateInMap({
+                                    arrow: this.directionInput.direction,
+                                });
+                                temp = 0;
                             }
+                            if (this.checkerE[i][j]!==0){
+                                temp = this.checkerE[i][j];
 
-                            Object.values(this.inMap.gameObjects).forEach(objectIN => {
-                                if (objectIN.flagInMap === temp) {
-                                    a = objectIN;
-                                }
-                                a.x = untils.withGrid(j);
-                                a.y = untils.withGrid(i);
-                            })
+                                Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                    if (objectIN.flagInMap === temp) {
+                                        a = objectIN;
+                                    }
+                                    a.x = untils.withGrid(j+24);
+                                    a.y = untils.withGrid(i);
+                                })
 
-                            //draw map
-                            a.isVisible && a.sprite.draw(this.ctx);
-                            a.updateInMap({
+                                a.isVisible && a.sprite.draw(this.ctx);
+                                a.updateInMap({
+                                    arrow: this.directionInput.direction,
+                                });
+                                temp = 0;
+                            }
+                            if (this.checkerP[i][j]!==0){
+                                temp = this.checkerP[i][j];
+
+                                Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                    if (objectIN.flagInMap === temp) {
+                                        a = objectIN;
+                                    }
+                                    a.x = untils.withGrid(j);
+                                    a.y = untils.withGrid(i);
+                                })
+
+                                a.isVisible && a.sprite.draw(this.ctx);
+                                a.updateInMap({
+                                    arrow: this.directionInput.direction,
+                                });
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    for (var i = 1; i < 15; i++) {
+                        for (var j = 1; j < 15; j++) {
+                            if (this.player[i][j] < 0) {
+                                this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                            }
+                        }
+                    }
+
+
+
+                    //-------------------------------------------------
+                if (this.turn) {
+
+                    // take ship
+                    let aPlay;
+                    Object.values(this.map.gameObjects).forEach(object => {
+                        if (object.type === "selector") {
+                            aPlay = object;
+                        }
+                    })
+
+                    // on Selector
+                    Object.values(this.map.gameObjects).forEach(object => {
+                        if (object.type !== "ship") {
+                            object.isCanBeControlled = true;
+                            object.x = this.gamePlayPosX;
+                            object.y = this.gamePlayPosY;
+                            object.isVisible = true;
+                        } else {
+                            object.isCanBeControlled = false;
+                            object.isVisible = false;
+                        }
+
+                    });
+
+                    // update direction for Selector
+                    Object.values(this.map.gameObjects).forEach(object => {
+                        if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
+                            if (object.preDirect !=="Select") {
+                                winner.checkToFlagPlayer(this.gamePlayPosX / untils.withGrid(1) - 24, this.gamePlayPosY / untils.withGrid(1));
+                                this.turn = false;
+
+                                console.log("done in player");
+                            }
+                        } else if (object.isVisible) {
+                            object.update({
                                 arrow: this.directionInput.direction,
                             });
-                            temp = 0;
                         }
-                    }
-                }
-                for (var i = 1; i < 15; i++) {
-                    for (var j = 1; j < 15; j++) {
-                        if (this.player[i][j] < 0) {
-                            this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                        object.preDirect = this.directionInput.direction;
+                    })
+
+
+                    // draw selector
+                    Object.values(this.map.gameObjects).forEach(object => {
+                        console.log(object.preDirect);
+                        if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
+
+                        } else if (object.isVisible) {
+                            object.sprite.draw(this.ctx);
+                            this.gamePlayPosY = object.y;
+                            this.gamePlayPosX = object.x;
                         }
-                    }
+                        object.preDirect = this.directionInput.direction;
+                    })
+
+
+                }else {
+                    console.log("In Enemy area");
+                    // INPUT for selection of enemy
+
+                    winner.checkToFlagEnemy(2,2)
+                    this.turn = true;
                 }
-
-
-                // take ship
-                let aPlay;
-                Object.values(this.map.gameObjects).forEach(object => {
-                    if (object.type === "selector") {
-                        aPlay = object;
-                    }
-                })
-
-                // on Selector
-                Object.values(this.map.gameObjects).forEach(object => {
-                    if (object.type !=="ship") {
-                        object.isCanBeControlled = true;
-                        object.x = this.gamePlayPosX;
-                        object.y = this.gamePlayPosY;
-                        object.isVisible = true;
-                    } else {
-                        object.isCanBeControlled = false;
-                        object.isVisible = false;
-                    }
-
-                });
-
-                // update direction for Selector
-                Object.values(this.map.gameObjects).forEach(object => {
-                    if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
-
-                    } else
-                    if (object.isVisible){
-                        object.update({
-                            arrow: this.directionInput.direction,
-                        });
-                    }
-                })
-
-                // draw selector
-                Object.values(this.map.gameObjects).forEach(object => {
-                    if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
-
-                    } else
-                    if (object.isVisible) {
-                        object.sprite.draw(this.ctx);
-                        this.gamePlayPosY = object.y;
-                        this.gamePlayPosX = object.x;
-                    }
-                })
-
-
 
             }else {
 

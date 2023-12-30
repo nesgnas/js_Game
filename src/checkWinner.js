@@ -7,4 +7,40 @@ class checkWinner{
     }
 
 
+    // dung de kiem tra mang enemy xem co ton tai ship o vtri hien tai hay k
+    checkToFlagPlayer(posX, posY){
+        if (this.player2[posY][posX]>0 ){
+            this.checkPlayer2[posY][posX] = 10;
+        }else {
+            this.checkPlayer2[posY][posX] = -10;
+        }
+        console.log(this.checkPlayer2);
+
+
+    }
+
+    checkToFlagEnemy(posX, posY){
+        let t1 ;
+        let t2 ;
+        t1 = Math.floor(Math.random()*14)+1;
+        t2 = Math.floor(Math.random()*14)+1;
+        while (true){
+            if (this.checkPlayer1[t2][t1]===0){
+                break;
+            }
+            t1 = Math.floor(Math.random()*14)+1;
+            t2 = Math.floor(Math.random()*14)+1;
+        }
+        posY = t2;
+        posX = t1;
+
+        if (this.player1[posY][posX]>0 ){
+            this.checkPlayer1[posY][posX] = 10;
+        }else {
+            this.checkPlayer1[posY][posX] = -10;
+        }
+        console.log(this.checkPlayer2);
+
+
+    }
 }

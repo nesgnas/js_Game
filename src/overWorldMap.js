@@ -113,18 +113,34 @@ window.overWorldMap = {
     }, checkPoint: {
         upperSrc: "./basicmap.png",
         gameObjects: {
-            selector: new moveObj({
-                isCanBeControlled: false,
+            selectorFalse: new moveObj({
+                isCanBeControlled: true,
                 map: "two",
                 x: untils.withGrid(1),
                 y: untils.withGrid(1),
                 type: "selector",
-                flagInMap: 0,
+                flagInMap: -10,
                 scale: 32,
 
                 lenMove: 1,
-                isVisible: false,
-                src: "./map/use-Tile/selector/shock-mine.png",
+                isVisible: true,
+                src: "./map/use-Tile/selector/shock-mine-c02c17.png",
+                sSrc: "./map/use-Tile/ship1x1/shock-mine-118d25.png",
+                dSrc: "./map/use-Tile/ship1x1/shock-mine-c02c17.png"
+
+            }),
+            selectorTrue: new moveObj({
+                isCanBeControlled: true,
+                map: "two",
+                x: untils.withGrid(1),
+                y: untils.withGrid(1),
+                type: "selector",
+                flagInMap: 10,
+                scale: 32,
+
+                lenMove: 1,
+                isVisible: true,
+                src: "./map/use-Tile/selector/shock-mine-118d25.png",
                 sSrc: "./map/use-Tile/ship1x1/shock-mine-118d25.png",
                 dSrc: "./map/use-Tile/ship1x1/shock-mine-c02c17.png"
 
