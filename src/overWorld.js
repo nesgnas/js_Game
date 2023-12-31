@@ -455,17 +455,17 @@ class overWorld{
 
         //logicPlayer.fill(9,9,3);
 
-        // logicPlayer.fill(2,1,1);
-        // logicPlayer.fill(3,1,1);
-        // logicPlayer.fill(12,1,1);
-        // logicPlayer.fill(13,1,1);
-        // logicPlayer.fill(6,1,4);
-        // logicPlayer.fill(2,4,2);
-        // logicPlayer.fill(12,4,2);
-        // logicPlayer.fill(7,6,2);
-        // logicPlayer.fill(2,10,3);
-        // logicPlayer.fill(6,10,4);
-        // logicPlayer.fill(11,10,3);
+        // logicPlayer.fill(1,1,1);
+        // logicPlayer.fill(2,3,1);
+        // logicPlayer.fill(2,5,1);
+        // logicPlayer.fill(5,5,1);
+        // logicPlayer.fill(7,5,2);
+        // logicPlayer.fill(10,5,2);
+        // logicPlayer.fill(9,9,2);
+        // logicPlayer.fill(2,7,3);
+        // logicPlayer.fill(3,11,3);
+        // logicPlayer.fill(11,1,4);
+        // logicPlayer.fill(11,11,4);
 
 
         // logicPlayer.fill(1,1,4)
