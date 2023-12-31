@@ -62,163 +62,163 @@ class overWorld{
 
             //if (true){
             if (fPlay.isAlready()){
-                    //console.log("wrong");
-                    //console.log(this.directionInput.direction);
+                //console.log("wrong");
+                //console.log(this.directionInput.direction);
 
 
-                    // clear frame
-                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                // clear frame
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-                    this.shipOfPlayer = [4,3,2,2];
-                    this.shipOfEnemy = [4,3,2,2];
+                this.shipOfPlayer = [4,3,2,2];
+                this.shipOfEnemy = [4,3,2,2];
 
-                    //Draw  Layer
-                    this.map.drawUpperImage(this.ctx);
+                //Draw  Layer
+                this.map.drawUpperImage(this.ctx);
 
 
 
-                    let a = new Object();
-                    let temp = 0;
-                    for (var i = 1; i < 15; i++) {
-                        for (var j = 1; j < 15; j++) {
+                let a = new Object();
+                let temp = 0;
+                for (var i = 1; i < 15; i++) {
+                    for (var j = 1; j < 15; j++) {
 
-                            if (this.player[i][j] > 0) {
-                                temp = this.player[i][j];
-                                for (var iT = i; iT < i + temp; iT++) {
-                                    for (var jT = j; jT < j + temp; jT++) {
-                                        this.player[iT][jT] = -temp;
+                        if (this.player[i][j] > 0) {
+                            temp = this.player[i][j];
+                            for (var iT = i; iT < i + temp; iT++) {
+                                for (var jT = j; jT < j + temp; jT++) {
+                                    this.player[iT][jT] = -temp;
+                                }
+                            }
+
+                            Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                if (objectIN.flagInMap === temp) {
+                                    a = objectIN;
+                                }
+                                a.x = untils.withGrid(j);
+                                a.y = untils.withGrid(i);
+                            })
+
+                            //draw map
+                            a.isVisible && a.sprite.draw(this.ctx);
+                            a.updateInMap({
+                                arrow: this.directionInput.direction,
+                            });
+                            temp = 0;
+                        }
+                        if (this.enemy[i][j] > 0) {
+                            temp = this.enemy[i][j];
+                            for (var iT = i; iT < i + temp; iT++) {
+                                for (var jT = j; jT < j + temp; jT++) {
+                                    this.enemy[iT][jT] = -temp;
+                                }
+                            }
+
+                            temp = 0;
+                        }
+                        if (this.checkerE[i][j]!==0){
+                            temp = this.checkerE[i][j];
+
+                            Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                if (objectIN.flagInMap === temp) {
+                                    a = objectIN;
+                                }
+                                a.x = untils.withGrid(j+24);
+                                a.y = untils.withGrid(i);
+                            })
+
+                            a.isVisible && a.sprite.draw(this.ctx);
+                            a.updateInMap({
+                                arrow: this.directionInput.direction,
+                            });
+                            temp = 0;
+                        }
+                        if (this.checkerP[i][j]!==0){
+                            temp = this.checkerP[i][j];
+
+                            Object.values(this.inMap.gameObjects).forEach(objectIN => {
+                                if (objectIN.flagInMap === temp) {
+                                    a = objectIN;
+                                }
+                                a.x = untils.withGrid(j);
+                                a.y = untils.withGrid(i);
+                            })
+
+                            a.isVisible && a.sprite.draw(this.ctx);
+                            a.updateInMap({
+                                arrow: this.directionInput.direction,
+                            });
+                            temp = 0;
+                        }
+                    }
+                }
+
+                for (var i = 1; i < 15; i++) {
+                    for (var j = 1; j < 15; j++) {
+                        if (this.player[i][j] < 0) {
+
+                            temp = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                            let boolean = true;
+                            for (var iT = i; iT < i + temp; iT++) {
+                                for (var jT = j; jT < j + temp; jT++) {
+                                    this.player[iT][jT] = temp;
+                                    if (this.checkerP[iT][jT]<=0){
+                                        boolean = false;
+
                                     }
                                 }
-
-                                Object.values(this.inMap.gameObjects).forEach(objectIN => {
-                                    if (objectIN.flagInMap === temp) {
-                                        a = objectIN;
-                                    }
-                                    a.x = untils.withGrid(j);
-                                    a.y = untils.withGrid(i);
-                                })
-
-                                //draw map
-                                a.isVisible && a.sprite.draw(this.ctx);
-                                a.updateInMap({
-                                    arrow: this.directionInput.direction,
-                                });
-                                temp = 0;
                             }
-                            if (this.enemy[i][j] > 0) {
-                                temp = this.enemy[i][j];
-                                for (var iT = i; iT < i + temp; iT++) {
-                                    for (var jT = j; jT < j + temp; jT++) {
-                                        this.enemy[iT][jT] = -temp;
+                            if (boolean){
+                                this.shipOfPlayer[temp-1] --;
+                                //console.log("do here P");
+                            }
+                            //this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
+                        }
+                        if(this.enemy[i][j]<0){
+                            temp = Math.sqrt(this.enemy[i][j] * this.enemy[i][j]);
+                            let boolean = true;
+                            for (var iT = i; iT < i + temp; iT++) {
+                                for (var jT = j; jT < j + temp; jT++) {
+                                    this.enemy[iT][jT] = temp;
+                                    if (this.checkerE[iT][jT]<=0){
+                                        boolean = false;
+
                                     }
                                 }
-
-                                temp = 0;
                             }
-                            if (this.checkerE[i][j]!==0){
-                                temp = this.checkerE[i][j];
-
-                                Object.values(this.inMap.gameObjects).forEach(objectIN => {
-                                    if (objectIN.flagInMap === temp) {
-                                        a = objectIN;
-                                    }
-                                    a.x = untils.withGrid(j+24);
-                                    a.y = untils.withGrid(i);
-                                })
-
-                                a.isVisible && a.sprite.draw(this.ctx);
-                                a.updateInMap({
-                                    arrow: this.directionInput.direction,
-                                });
-                                temp = 0;
-                            }
-                            if (this.checkerP[i][j]!==0){
-                                temp = this.checkerP[i][j];
-
-                                Object.values(this.inMap.gameObjects).forEach(objectIN => {
-                                    if (objectIN.flagInMap === temp) {
-                                        a = objectIN;
-                                    }
-                                    a.x = untils.withGrid(j);
-                                    a.y = untils.withGrid(i);
-                                })
-
-                                a.isVisible && a.sprite.draw(this.ctx);
-                                a.updateInMap({
-                                    arrow: this.directionInput.direction,
-                                });
-                                temp = 0;
+                            if (boolean){
+                                this.shipOfEnemy[temp-1] --;
+                                //console.log("do here E");
                             }
                         }
                     }
+                }
 
-                    for (var i = 1; i < 15; i++) {
-                        for (var j = 1; j < 15; j++) {
-                            if (this.player[i][j] < 0) {
+                //console.log("PLAYER: "+this.shipOfPlayer);
+                //console.log("ENEMY: "+this.shipOfEnemy);
 
-                                temp = Math.sqrt(this.player[i][j] * this.player[i][j]);
-                                let boolean = true;
-                                for (var iT = i; iT < i + temp; iT++) {
-                                    for (var jT = j; jT < j + temp; jT++) {
-                                        this.player[iT][jT] = temp;
-                                        if (this.checkerP[iT][jT]<=0){
-                                            boolean = false;
+                let sumP=0;
+                let sumE = 0;
+                this.shipOfPlayer.forEach(i =>{
+                    sumP+=i;
+                });
+                this.shipOfEnemy.forEach(i=>{
+                    sumE +=i;
+                });
 
-                                        }
-                                    }
-                                }
-                                if (boolean){
-                                    this.shipOfPlayer[temp-1] --;
-                                    //console.log("do here P");
-                                }
-                                //this.player[i][j] = Math.sqrt(this.player[i][j] * this.player[i][j]);
-                            }
-                            if(this.enemy[i][j]<0){
-                                temp = Math.sqrt(this.enemy[i][j] * this.enemy[i][j]);
-                                let boolean = true;
-                                for (var iT = i; iT < i + temp; iT++) {
-                                    for (var jT = j; jT < j + temp; jT++) {
-                                        this.enemy[iT][jT] = temp;
-                                        if (this.checkerE[iT][jT]<=0){
-                                            boolean = false;
-
-                                        }
-                                    }
-                                }
-                                if (boolean){
-                                    this.shipOfEnemy[temp-1] --;
-                                    //console.log("do here E");
-                                }
-                            }
-                        }
-                    }
-
-                    //console.log("PLAYER: "+this.shipOfPlayer);
-                    //console.log("ENEMY: "+this.shipOfEnemy);
-
-                    let sumP=0;
-                    let sumE = 0;
-                    this.shipOfPlayer.forEach(i =>{
-                        sumP+=i;
-                    });
-                    this.shipOfEnemy.forEach(i=>{
-                        sumE +=i;
-                    });
-
-                    if (sumE ===0 ){
-                        console.log("PLAYER WINNNNNNNNNNER");
-                        console.log("ENEMY LOSEEEEEEEEE")
-                        this.Winner = 1;
-                    }else {
-                        //console.log("SumE is "+sumE);
-                    }
-                    if (sumP === 0){
-                        console.log("ENEMY WINNNNNNNNNNER")
-                        console.log("PLAYER LOSEEEEEEEEE");
-                        this.Winner = 2;
-                    }else {
-                        //console.log("SumP is "+sumP);
-                    }
+                if (sumE ===0 ){
+                    console.log("PLAYER WINNNNNNNNNNER");
+                    console.log("ENEMY LOSEEEEEEEEE")
+                    this.Winner = 1;
+                }else {
+                    //console.log("SumE is "+sumE);
+                }
+                if (sumP === 0){
+                    console.log("ENEMY WINNNNNNNNNNER")
+                    console.log("PLAYER LOSEEEEEEEEE");
+                    this.Winner = 2;
+                }else {
+                    //console.log("SumP is "+sumP);
+                }
 
 
                 if (this.Winner===0) {
@@ -455,17 +455,17 @@ class overWorld{
 
         //logicPlayer.fill(9,9,3);
 
-        // logicPlayer.fill(2,1,1);
-        // logicPlayer.fill(3,1,1);
-        // logicPlayer.fill(12,1,1);
-        // logicPlayer.fill(13,1,1);
-        // logicPlayer.fill(6,1,4);
-        // logicPlayer.fill(2,4,2);
-        // logicPlayer.fill(12,4,2);
-        // logicPlayer.fill(7,6,2);
-        // logicPlayer.fill(2,10,3);
-        // logicPlayer.fill(6,10,4);
-        // logicPlayer.fill(11,10,3);
+        logicPlayer.fill(1,1,1);
+        logicPlayer.fill(2,3,1);
+        logicPlayer.fill(2,5,1);
+        logicPlayer.fill(5,5,1);
+        logicPlayer.fill(7,5,2);
+        logicPlayer.fill(10,5,2);
+        logicPlayer.fill(9,9,2);
+        logicPlayer.fill(2,7,3);
+        logicPlayer.fill(3,11,3);
+        logicPlayer.fill(11,1,4);
+        logicPlayer.fill(11,11,4);
 
 
         // logicPlayer.fill(1,1,4)
