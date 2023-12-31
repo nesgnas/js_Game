@@ -23,3 +23,18 @@ body{
 .game-container canvas{
     image-rendering: pixelated;
 }
+
+h1 {
+    color: burlywood;  /* Set text color */
+    background-color: midnightblue;  /* Set background color */
+    padding: 10px;  /* Add padding */
+    text-align: center;  /* Center the text */
+}
+
+/* Add styling for h2 */
+h2 {
+    color: midnightblue;  /* Set text color */
+    font-style: italic;  /* Italicize the text */
+    margin-top: 10px;  /* Add top margin */
+    margin-left: 10px;
+}

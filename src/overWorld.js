@@ -7,10 +7,20 @@ class overWorld{
         this.element = config.element;
         this.canvas = this.element.querySelector(".game-canvas");
         this.ctx = this.canvas.getContext("2d");
+        this.autoBot = config.auto;
+        this.stackX = config.stackX;
+
+        this.Winner =0; // 0-- basic; 1-- playerWin; 2-- BotWin
+
+        this.arlay = false;
+
+
 
         //initial dataset of map
         this.map = null;
         this.inMap = null;
+
+
 
         // arr for map
         this.enemy = config.enemy;
@@ -48,10 +58,10 @@ class overWorld{
             const fPlay = new forPlayer(this.queue,this.enemy);
             const winner = new checkWinner(this.player,this.checkerP,this.enemy,this.checkerE);
 
+
+
             //if (true){
-
-
-                    if (fPlay.isAlready()){
+            if (fPlay.isAlready()){
                     //console.log("wrong");
                     //console.log(this.directionInput.direction);
 
@@ -183,8 +193,8 @@ class overWorld{
                         }
                     }
 
-                    console.log("PLAYER: "+this.shipOfPlayer);
-                    console.log("ENEMY: "+this.shipOfEnemy);
+                    //console.log("PLAYER: "+this.shipOfPlayer);
+                    //console.log("ENEMY: "+this.shipOfEnemy);
 
                     let sumP=0;
                     let sumE = 0;
@@ -194,84 +204,102 @@ class overWorld{
                     this.shipOfEnemy.forEach(i=>{
                         sumE +=i;
                     });
+
                     if (sumE ===0 ){
-                        console.log("Enemy Win")
+                        console.log("PLAYER WINNNNNNNNNNER");
+                        console.log("ENEMY LOSEEEEEEEEE")
+                        this.Winner = 1;
                     }else {
-                        console.log("SumE is "+sumE);
+                        //console.log("SumE is "+sumE);
                     }
                     if (sumP === 0){
-                        console.log("Player Win");
+                        console.log("ENEMY WINNNNNNNNNNER")
+                        console.log("PLAYER LOSEEEEEEEEE");
+                        this.Winner = 2;
                     }else {
-                        console.log("SumP is "+sumP);
+                        //console.log("SumP is "+sumP);
                     }
 
 
-
+                if (this.Winner===0) {
                     //-------------------------------------------------
-                if (this.turn) {
+                    if (this.turn) {
 
-                    // take ship
-                    let aPlay;
-                    Object.values(this.map.gameObjects).forEach(object => {
-                        if (object.type === "selector") {
-                            aPlay = object;
-                        }
-                    })
-
-                    // on Selector
-                    Object.values(this.map.gameObjects).forEach(object => {
-                        if (object.type !== "ship") {
-                            object.isCanBeControlled = true;
-                            object.x = this.gamePlayPosX;
-                            object.y = this.gamePlayPosY;
-                            object.isVisible = true;
-                        } else {
-                            object.isCanBeControlled = false;
-                            object.isVisible = false;
-                        }
-
-                    });
-
-                    // update direction for Selector
-                    Object.values(this.map.gameObjects).forEach(object => {
-                        if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
-                            if (object.preDirect !=="Select") {
-                                this.turn = winner.checkToFlagPlayer(this.gamePlayPosX / untils.withGrid(1) - 24, this.gamePlayPosY / untils.withGrid(1));
-
-
-                                console.log("done in player");
+                        // take ship
+                        let aPlay;
+                        Object.values(this.map.gameObjects).forEach(object => {
+                            if (object.type === "selector") {
+                                aPlay = object;
                             }
-                        } else if (object.isVisible) {
-                            object.update({
-                                arrow: this.directionInput.direction,
-                            });
-                        }
-                        object.preDirect = this.directionInput.direction;
-                    })
+                        })
+
+                        // on Selector
+                        Object.values(this.map.gameObjects).forEach(object => {
+                            if (object.type !== "ship") {
+                                object.isCanBeControlled = true;
+                                object.x = this.gamePlayPosX;
+                                object.y = this.gamePlayPosY;
+                                object.isVisible = true;
+                            } else {
+                                object.isCanBeControlled = false;
+                                object.isVisible = false;
+                            }
+
+                        });
+
+                        // update direction for Selector
+                        Object.values(this.map.gameObjects).forEach(object => {
+                            if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
+                                if (object.preDirect !== "Select") {
+                                    this.turn = winner.checkToFlagPlayer(this.gamePlayPosX / untils.withGrid(1) - 24, this.gamePlayPosY / untils.withGrid(1));
 
 
-                    // draw selector
-                    Object.values(this.map.gameObjects).forEach(object => {
-                        //console.log(object.preDirect);
-                        if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
-
-                        } else if (object.isVisible) {
-                            object.sprite.draw(this.ctx);
-                            this.gamePlayPosY = object.y;
-                            this.gamePlayPosX = object.x;
-                        }
-                        object.preDirect = this.directionInput.direction;
-                    })
+                                    console.log("done in player");
+                                }
+                            } else if (object.isVisible) {
+                                object.update({
+                                    arrow: this.directionInput.direction,
+                                });
+                            }
+                            object.preDirect = this.directionInput.direction;
+                        })
 
 
-                }else {
-                    console.log("In Enemy area");
-                    // INPUT for selection of enemy
+                        // draw selector
+                        Object.values(this.map.gameObjects).forEach(object => {
+                            //console.log(object.preDirect);
+                            if (object.isVisible && (this.directionInput.direction === "Select" || this.directionInput.direction === "Delete")) {
 
-                    this.turn = winner.checkToFlagEnemy(2,2);
+                            } else if (object.isVisible) {
+                                object.sprite.draw(this.ctx);
+                                this.gamePlayPosY = object.y;
+                                this.gamePlayPosX = object.x;
+                            }
+                            object.preDirect = this.directionInput.direction;
+                        })
 
+
+                    } else {
+
+                        let cur = [];
+                        cur = this.autoBot.giveNum(4);
+                        this.turn = winner.checkToFlagEnemy(cur[1], cur[0]);
+                        this.autoBot.getSignal(!this.turn);
+
+
+                    }
                 }
+                else {
+                    if (this.Winner === 1 && !this.arlay ){
+                        this.arlay = true;
+                        window.alert("You Win");
 
+                    }
+                    if (this.Winner === 2 && !this.arlay){
+                        this.arlay = true;
+                        window.alert("You Lose");
+                    }
+                }
             }else {
 
                 //DON'T CARE
@@ -427,17 +455,17 @@ class overWorld{
 
         //logicPlayer.fill(9,9,3);
 
-        //logicPlayer.fill(6,6,3);
-        logicPlayer.fill(1,1,1);
-        logicPlayer.fill(1,2,1);
-        logicPlayer.fill(2,2,1);
-        logicPlayer.fill(2,1,1);
-        logicPlayer.fill(3,1,2);
-        logicPlayer.fill(3,3,2);
-        logicPlayer.fill(3,5,2);
-        logicPlayer.fill(5,1,3);
-        logicPlayer.fill(5,4,3);
-        logicPlayer.fill(8,1,4);
+        // logicPlayer.fill(2,1,1);
+        // logicPlayer.fill(3,1,1);
+        // logicPlayer.fill(12,1,1);
+        // logicPlayer.fill(13,1,1);
+        // logicPlayer.fill(6,1,4);
+        // logicPlayer.fill(2,4,2);
+        // logicPlayer.fill(12,4,2);
+        // logicPlayer.fill(7,6,2);
+        // logicPlayer.fill(2,10,3);
+        // logicPlayer.fill(6,10,4);
+        // logicPlayer.fill(11,10,3);
 
 
         // logicPlayer.fill(1,1,4)
@@ -448,7 +476,6 @@ class overWorld{
 
         const queue = new Queue();
         //console.log("queueeee = "+queue.isEmpty());
-        const stack = new Stack();
 
 
         let shipOfPlayer = [4,3,2,2];
@@ -467,16 +494,19 @@ class overWorld{
                 object.type === "ship" && queue.enqueue(object.scale)
             })
 
-        // reverse queue
-        while (!queue.isEmpty){
-            stack.push(queue.dequeue())
-        }
-        while (!stack.isEmpty()){
-            queue.enqueue(stack.pop())
-        }
+        // // reverse queue
+        // while (!queue.isEmpty){
+        //     stack.push(queue.dequeue())
+        // }
+        // while (!stack.isEmpty()){
+        //     queue.enqueue(stack.pop())
+        // }
 
         this.queue = queue;
         //queue.dequeue();
+
+        //console.log(this.autoBot.giveNum(4));
+
 
 
 
