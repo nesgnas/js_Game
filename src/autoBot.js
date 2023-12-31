@@ -4,7 +4,7 @@ class autoBot{
         this.stackX = stackX;
 
         this.arrPlayer = arrPlayer;
-        this.isOn = false;
+
         this.alredy = 0;
         this.miner=-1;
     }
@@ -12,14 +12,14 @@ class autoBot{
     giveNum(scale){
         let cur = [];
 
-        console.log("___________")
-        console.log("Stack here");
-        console.log(this.stackX);
-
-        console.log("stack empty? "+this.stackX.isEmpty());
+        // console.log("___________")
+        // console.log("Stack here");
+        // console.log(this.stackX);
+        //
+        // console.log("stack empty? "+this.stackX.isEmpty());
         if(this.stackX.isEmpty()) {
-
-            console.log("*******EMPTYEMPTYEMPTY*****")
+            //
+            // console.log("*******EMPTYEMPTYEMPTY*****")
             this.miner++;
 
         }
@@ -27,6 +27,9 @@ class autoBot{
 
         if (scale ===1){
             this.miner--;
+            if (this.alredy!==scale){
+                this.alredy = scale;
+            }
             let t1 ;
             let t2 ;
             t1 = Math.floor(Math.random()*14)+1;
@@ -38,9 +41,10 @@ class autoBot{
                 t1 = Math.floor(Math.random()*14)+1;
                 t2 = Math.floor(Math.random()*14)+1;
             }
-            console.log("t1= "+t1+" t2= "+t2);
+            // console.log("t1= "+t1+" t2= "+t2);
             cur[0] = t2;
             cur[1] = t1;
+            return [cur[0],cur[1]];
         }else {
             // console.log("scale is " + scale);
             // console.log("this already " + this.alredy);
@@ -65,11 +69,11 @@ class autoBot{
                 cur[1] = crr[1];
             } else {
 
-                console.log("normal stack");
-                console.log(this.stackX);
+                // console.log("normal stack");
+                // console.log(this.stackX);
                 let crr;
                 crr = this.stackX.peek();
-                console.log("current crr = "+crr);
+                // console.log("current crr = "+crr);
 
                 while (true) {
                     let a;
@@ -80,7 +84,7 @@ class autoBot{
 
                         break;
                     }
-                    console.log("pop inital [" + a + "," + b + "]");
+                    // console.log("pop inital [" + a + "," + b + "]");
                     let temp =this.stackX.pop();
                     if(this.stackX.isEmpty()){
                         this.stackX.push(temp);
@@ -88,8 +92,8 @@ class autoBot{
                     }
                     crr = this.stackX.peek();
                 }
-                console.log("take out");
-                console.log(crr);
+                // console.log("take out");
+                // console.log(crr);
 
 
                 cur[0] = crr[0];
@@ -108,94 +112,104 @@ class autoBot{
     getSignal(boolean){
         let cur;
         if (boolean){
-            cur = this.stackX.pop();
-            let type = cur[2];
-            //console.log("add to stack");
-            if (type === "initial") {
-                // console.log("________IN INITIAL_________");
-                // console.log(this.arrPlayer);
-                // //console.log([cur[0],cur[1]])
-                // console.log("______________")
-                if (this.arrPlayer[cur[0]][cur[1]+1] === 0) {
-                    this.stackX.push([cur[0], cur[1] + 1, "right"]);
-                    //console.log([cur[0], cur[1] + 1],"right");
+            // console.log("ALLREADYY = "+this.alredy);
+            if (this.alredy===1){
+
+            }else {
+                cur = this.stackX.pop();
+                // console.log("type is =" + cur);
+                let type = cur[2];
+                //console.log("add to stack");
+
+
+                if (type === "initial") {
+                    // console.log("________IN INITIAL_________");
+                    // console.log(this.arrPlayer);
+                    // //console.log([cur[0],cur[1]])
+                    // console.log("______________")
+                    if (this.arrPlayer[cur[0]][cur[1] + 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] + 1, "right"]);
+                        //console.log([cur[0], cur[1] + 1],"right");
+                    }
+                    if (this.arrPlayer[cur[0]][cur[1] - 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] - 1, "left"]);
+                        //console.log([cur[0], cur[1] - 1],"left");
+                    }
+                    if (this.arrPlayer[cur[0] - 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] - 1, cur[1], "up"]);
+                        //console.log([cur[0] - 1, cur[1]],"up");
+                    }
+                    if (this.arrPlayer[cur[0] + 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] + 1, cur[1], "down"]);
+                        //console.log([cur[0] + 1, cur[1]],"down");
+                    }
                 }
-                if (this.arrPlayer[cur[0]][ cur[1] - 1] === 0) {
-                    this.stackX.push([cur[0], cur[1] - 1, "left"]);
-                    //console.log([cur[0], cur[1] - 1],"left");
+                if (type === "right") {
+                    if (this.arrPlayer[cur[0]][cur[1] + 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] + 1, "right"]);
+                        //console.log([cur[0], cur[1] + 1],"right");
+                    }
+                    if (this.arrPlayer[cur[0] - 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] - 1, cur[1], "up"]);
+                        //console.log([cur[0] - 1, cur[1]],"up");
+                    }
+                    if (this.arrPlayer[cur[0] + 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] + 1, cur[1], "down"]);
+                        //console.log([cur[0] + 1, cur[1]],"down");
+                    }
                 }
-                if (this.arrPlayer[cur[0] - 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] - 1, cur[1], "up"]);
-                    //console.log([cur[0] - 1, cur[1]],"up");
+                if (type === "left") {
+                    if (this.arrPlayer[cur[0]][cur[1] - 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] - 1, "left"]);
+                        //console.log([cur[0], cur[1] - 1],"left");
+                    }
+                    if (this.arrPlayer[cur[0] - 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] - 1, cur[1], "up"]);
+                        //console.log([cur[0] - 1, cur[1]],"up");
+                    }
+                    if (this.arrPlayer[cur[0] + 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] + 1, cur[1], "down"]);
+                        //console.log([cur[0] + 1, cur[1]],"down");
+                    }
+
                 }
-                if (this.arrPlayer[cur[0] + 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] + 1, cur[1], "down"]);
-                    //console.log([cur[0] + 1, cur[1]],"down");
+                if (type === "down") {
+                    if (this.arrPlayer[cur[0]][cur[1] + 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] + 1, "right"]);
+                        //console.log([cur[0], cur[1] + 1],"right");
+                    }
+
+                    if (this.arrPlayer[cur[0]][cur[1] - 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] - 1, "left"]);
+                        //console.log([cur[0], cur[1] - 1],"left");
+                    }
+
+                    if (this.arrPlayer[cur[0] + 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] + 1, cur[1], "down"]);
+                        //console.log([cur[0] + 1, cur[1]],"down");
+                    }
+
+
+                }
+                if (type === "up") {
+                    if (this.arrPlayer[cur[0]][cur[1]] === 0) {
+                        this.stackX.push([cur[0], cur[1] + 1, "right"]);
+                        //console.log([cur[0], cur[1] + 1],"right");
+                    }
+
+                    if (this.arrPlayer[cur[0]][cur[1] - 1] === 0) {
+                        this.stackX.push([cur[0], cur[1] - 1, "left"]);
+                        //console.log([cur[0], cur[1] - 1],"left");
+                    }
+
+                    if (this.arrPlayer[cur[0] - 1][cur[1]] === 0) {
+                        this.stackX.push([cur[0] - 1, cur[1], "up"]);
+                        //console.log([cur[0] - 1, cur[1]],"up");
+                    }
+
                 }
             }
-            if (type === "right"){
-                if (this.arrPlayer[cur[0]][cur[1]+1] === 0) {
-                    this.stackX.push([cur[0], cur[1] + 1, "right"]);
-                    //console.log([cur[0], cur[1] + 1],"right");
-                }
-                if (this.arrPlayer[cur[0] - 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] - 1, cur[1], "up"]);
-                    //console.log([cur[0] - 1, cur[1]],"up");
-                }
-                if (this.arrPlayer[cur[0] + 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] + 1, cur[1], "down"]);
-                    //console.log([cur[0] + 1, cur[1]],"down");
-                }
-            }
-            if (type === "left"){
-                if (this.arrPlayer[cur[0]][ cur[1] - 1] === 0) {
-                    this.stackX.push([cur[0], cur[1] - 1, "left"]);
-                    //console.log([cur[0], cur[1] - 1],"left");
-                }
-                if (this.arrPlayer[cur[0] - 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] - 1, cur[1], "up"]);
-                    //console.log([cur[0] - 1, cur[1]],"up");
-                }
-                if (this.arrPlayer[cur[0] + 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] + 1, cur[1], "down"]);
-                    //console.log([cur[0] + 1, cur[1]],"down");
-                }
 
-            }
-            if (type === "down"){
-                if (this.arrPlayer[cur[0]][cur[1]+1] === 0) {
-                    this.stackX.push([cur[0], cur[1] + 1, "right"]);
-                    //console.log([cur[0], cur[1] + 1],"right");
-                }
-
-                if (this.arrPlayer[cur[0]][ cur[1] - 1] === 0) {
-                    this.stackX.push([cur[0], cur[1] - 1, "left"]);
-                    //console.log([cur[0], cur[1] - 1],"left");
-                }
-
-                if (this.arrPlayer[cur[0] + 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] + 1, cur[1], "down"]);
-                    //console.log([cur[0] + 1, cur[1]],"down");
-                }
-
-
-            }
-            if (type === "up"){
-                if (this.arrPlayer[cur[0]][cur[1]] === 0) {
-                    this.stackX.push([cur[0], cur[1] + 1, "right"]);
-                    //console.log([cur[0], cur[1] + 1],"right");
-                }
-
-                if (this.arrPlayer[cur[0]][ cur[1] - 1] === 0) {
-                    this.stackX.push([cur[0], cur[1] - 1, "left"]);
-                    //console.log([cur[0], cur[1] - 1],"left");
-                }
-
-                if (this.arrPlayer[cur[0] - 1][ cur[1]] === 0) {
-                    this.stackX.push([cur[0] - 1, cur[1], "up"]);
-                    //console.log([cur[0] - 1, cur[1]],"up");
-                }
-            }
 
 
             //console.log(this.stackX);
