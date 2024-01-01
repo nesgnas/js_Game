@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: function to call this game (like "static void main" in Java)
+*/
 (function () {
 
 
@@ -12,8 +16,7 @@
 
     const dataEnemy = new dataForEnemy(enemy);
     dataEnemy.renderMap();
-    console.log("enemy  AFTER FILL in Init")
-    console.log(enemy)
+
 
     const player = new Arr4Map().Empty2DArray(16,16);
     const playerChecker = new Arr4Map().Empty2DArray(16,16);

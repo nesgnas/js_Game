@@ -1,3 +1,11 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: Main part for AutoBot;
+    the idea will be explained more detail in report
+    - 2 main function
+        + give position for BOT
+        + control signal if continue to shoot or not
+*/
 class autoBot{
 
     constructor(stackX, arrPlayer) {
@@ -12,16 +20,9 @@ class autoBot{
     giveNum(scale){
         let cur = [];
 
-        // console.log("___________")
-        // console.log("Stack here");
-        // console.log(this.stackX);
-        //
-        // console.log("stack empty? "+this.stackX.isEmpty());
-        if(this.stackX.isEmpty()) {
-            //
-            // console.log("*******EMPTYEMPTYEMPTY*****")
-            this.miner++;
 
+        if(this.stackX.isEmpty()) {
+            this.miner++;
         }
         scale = scale - this.miner;
 
@@ -41,40 +42,25 @@ class autoBot{
                 t1 = Math.floor(Math.random()*14)+1;
                 t2 = Math.floor(Math.random()*14)+1;
             }
-            // console.log("t1= "+t1+" t2= "+t2);
             cur[0] = t2;
             cur[1] = t1;
             return [cur[0],cur[1]];
         }else {
-            // console.log("scale is " + scale);
-            // console.log("this already " + this.alredy);
-
             if (scale != this.alredy) {
-
-
                 this.alredy = scale;
                 for (var i = 15 - scale; i > 0; i = i - scale) {
                     for (var j = 15 - scale; j > 0; j = j - scale) {
-
                         this.stackX.push([j, i, "initial"]);
-
                     }
                 }
 
                 let crr;
-                // console.log("first time rendering")
-                // console.log(this.stack);
                 crr = this.stackX.peek();
                 cur[0] = crr[0];
                 cur[1] = crr[1];
             } else {
-
-                // console.log("normal stack");
-                // console.log(this.stackX);
                 let crr;
                 crr = this.stackX.peek();
-                // console.log("current crr = "+crr);
-
                 while (true) {
                     let a;
                     let b;
@@ -84,7 +70,6 @@ class autoBot{
 
                         break;
                     }
-                    // console.log("pop inital [" + a + "," + b + "]");
                     let temp =this.stackX.pop();
                     if(this.stackX.isEmpty()){
                         this.stackX.push(temp);
@@ -92,18 +77,9 @@ class autoBot{
                     }
                     crr = this.stackX.peek();
                 }
-                // console.log("take out");
-                // console.log(crr);
-
-
                 cur[0] = crr[0];
                 cur[1] = crr[1];
-
-
             }
-            // console.log("___Pos for input____");
-            // console.log([cur[0], cur[1]]);
-            // console.log("_____________________");
         }
 
         return [cur[0],cur[1]];
@@ -112,21 +88,14 @@ class autoBot{
     getSignal(boolean){
         let cur;
         if (boolean){
-            // console.log("ALLREADYY = "+this.alredy);
             if (this.alredy===1){
 
             }else {
                 cur = this.stackX.pop();
-                // console.log("type is =" + cur);
-                let type = cur[2];
-                //console.log("add to stack");
 
+                let type = cur[2];
 
                 if (type === "initial") {
-                    // console.log("________IN INITIAL_________");
-                    // console.log(this.arrPlayer);
-                    // //console.log([cur[0],cur[1]])
-                    // console.log("______________")
                     if (this.arrPlayer[cur[0]][cur[1] + 1] === 0) {
                         this.stackX.push([cur[0], cur[1] + 1, "right"]);
                         //console.log([cur[0], cur[1] + 1],"right");
@@ -210,15 +179,8 @@ class autoBot{
                 }
             }
 
-
-
-            //console.log(this.stackX);
         }else {
-            //console.log("simple pop");
-
             cur = this.stackX.pop();
-            //console.log("this pop = "+ cur);
-            //console.log(this.arrPlayer);
         }
     }
 }

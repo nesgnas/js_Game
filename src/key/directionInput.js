@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose:  get signal input from user, return direction signal
+*/
 class directionInput{
     constructor() {
         this.heldDiriction = [];

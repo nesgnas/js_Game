@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: sub class, store all has all function needed with this object
+*/
 class moveObj extends gameObject{
     constructor(config) {
         super(config);
@@ -20,6 +24,65 @@ class moveObj extends gameObject{
         }
         this.type = config.type;
 
+    }
+    changeState(changeState,logicPlayer){
+        console.log("in change State, try take object flagSrc value "+this.flgSrc);
+        const player = logicPlayer;
+        let xT= this.x/untils.withGrid(1);
+        let yT = this.y/untils.withGrid(1);
+        let scaleT = this.scale/untils.withGrid(1);
+
+        if (changeState === "B" ){
+            if (this.flgSrc ==="A" || this.flgSrc ==="B"){
+                this.sprite = new Sprite({
+                    gameObject: this,
+                    src: this.sSrc || "./map/sample/npc1.png"
+                })
+                console.log("changState is "+changeState+", flgSrc is "+this.flgSrc);
+
+                this.flgSrc = "B";
+
+
+                if(logicPlayer.isFullScale(xT,yT,scaleT)){
+                    player.fill(this.x/untils.withGrid(1),this.y/untils.withGrid(1),this.scale/untils.withGrid(1));
+                }
+
+            }
+            if (this.flgSrc ==="C"){
+                this.sprite = new Sprite({
+                    gameObject: this,
+                    src: this.src || "./map/sample/npc1.png"
+                })
+                console.log("changState is "+changeState+", flgSrc is "+this.flgSrc);
+
+                this.flgSrc = "A";
+                if(logicPlayer.isPoint(xT,yT,scaleT)) {
+                    player.delete(this.x / untils.withGrid(1), this.y / untils.withGrid(1), this.scale / untils.withGrid(1));
+                }
+            }
+        }
+        if (changeState === "C" ){
+            if (this.flgSrc ==="A" || this.flgSrc ==="B"){
+                this.sprite = new Sprite({
+                    gameObject: this,
+                    src: this.dSrc || "./map/sample/npc1.png"
+                })
+                console.log("changState is "+changeState+", flgSrc is "+this.flgSrc);
+
+                this.flgSrc = "C";
+            }
+            if (this.flgSrc ==="C"){
+                this.sprite = new Sprite({
+                    gameObject: this,
+                    src: this.dSrc || "./map/sample/npc1.png"
+                })
+                console.log("changState is "+changeState+", flgSrc is "+this.flgSrc);
+
+                this.flgSrc = "C";
+            }
+        }
+
+        console.log("FINISH");
     }
 
     update(state) {

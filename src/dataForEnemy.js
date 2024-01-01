@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: use to generate ship for Enemy BOT, fill 4(1x1) 3(2x2) 2(3x3) 2(4x4)
+*/
 class dataForEnemy{
     constructor(config) {
         this.arr = config

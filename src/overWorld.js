@@ -1,3 +1,10 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose:   VERY IMPORTANT PART OF THE GAME
+    This is Core part with game loop,
+    and many step happen here.
+    Most general process will draw in report
+*/
 class overWorld{
 
 
@@ -445,8 +452,7 @@ class overWorld{
 
 
     init(){
-        // console.log(this.enemy);
-        // console.log(this.player);
+
 
         const logicPlayer = new logicForMap(this.player);
 
@@ -468,22 +474,19 @@ class overWorld{
         // logicPlayer.fill(11,11,4);
 
 
-        // logicPlayer.fill(1,1,4)
-        // console.log(this.player);
-        // logicPlayer.delete (1,1,4);
-        // console.log(this.player);
+
 
 
         const queue = new Queue();
-        //console.log("queueeee = "+queue.isEmpty());
+
 
 
         let shipOfPlayer = [4,3,2,2];
         let shipOfEnemy = [4,3,2,2];
+
         this.shipOfPlayer = shipOfPlayer;
         this.shipOfEnemy = shipOfEnemy;
-        console.log("PLAYER: "+this.shipOfPlayer);
-        console.log("ENEMY: "+this.shipOfEnemy);
+
 
 
         this.map = new overWorldMap(window.overWorldMap.Street);
@@ -494,23 +497,9 @@ class overWorld{
                 object.type === "ship" && queue.enqueue(object.scale)
             })
 
-        // // reverse queue
-        // while (!queue.isEmpty){
-        //     stack.push(queue.dequeue())
-        // }
-        // while (!stack.isEmpty()){
-        //     queue.enqueue(stack.pop())
-        // }
 
         this.queue = queue;
-        //queue.dequeue();
 
-        //console.log(this.autoBot.giveNum(4));
-
-
-
-
-        console.log(queue);
 
 
         this.directionInput = new directionInput();
