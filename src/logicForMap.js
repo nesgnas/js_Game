@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: all logic for working with 2d array
+*/
 class logicForMap{
     constructor(arr) {
         this.arr = arr;

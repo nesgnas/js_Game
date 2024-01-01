@@ -1,3 +1,8 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: control how to draw Bbject into canvas
+*/
+
 class Sprite{
     constructor(config) {
         //set up the image

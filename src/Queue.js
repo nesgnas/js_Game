@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: class queue
+*/
 class Queue {
     constructor() {
         this.elements = {};

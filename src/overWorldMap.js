@@ -1,3 +1,7 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose:  create Object structure for map, has draw() function to draw MapLayer
+*/
 class overWorldMap{
     constructor(config) {
         this.gameObjects = config.gameObjects;

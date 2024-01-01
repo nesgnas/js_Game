@@ -1,3 +1,11 @@
+/* Name: 2 -- Battle Ship
+ Bui Doan The Sang --ITCSIU21104
+ Purpose: fill the reminder map for Player | Bot;
+    to perform tile select "true" and select "false" in reminder map
+    with value -10 for false-selection
+                10 for true-selection
+
+*/
 class checkWinner{
     constructor(player1, checkPlayer1, player2, checkPlayer2) {
         this.player1 = player1;
@@ -22,19 +30,6 @@ class checkWinner{
     }
 
     checkToFlagEnemy(posX, posY){
-        // let t1 ;
-        // let t2 ;
-        // t1 = Math.floor(Math.random()*14)+1;
-        // t2 = Math.floor(Math.random()*14)+1;
-        // while (true){
-        //     if (this.checkPlayer1[t2][t1]===0){
-        //         break;
-        //     }
-        //     t1 = Math.floor(Math.random()*14)+1;
-        //     t2 = Math.floor(Math.random()*14)+1;
-        // }
-        // posY = t2;
-        // posX = t1;
 
         if (this.player1[posY][posX]>0 ){
             this.checkPlayer1[posY][posX] = 10;
