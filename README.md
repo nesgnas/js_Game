@@ -4,6 +4,10 @@
 THIS PROJECT MADE BY ONLY ME
 
 Bui Doan The Sang - ICSIU21104
+
+Link for Slide Presentaion
+* <a href="https://www.canva.com/design/DAF4pp2PbaU/qUEJ9_yKoe3LpiB9w3DYxQ/edit?utm_content=DAF4pp2PbaU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">Slide Presentaion</a>
+
 ________________________________________________
 Here's a project to turn the board game "Battleship" into a web application.
 
